@@ -6,7 +6,7 @@ const tools = require('../utils/tools');
 exports.createTag = async(req,res) =>{
     let arr = tools.sqlvals(req.body);
 
-    [err,result] = await to(db.query('INSERT INTO TAGS(title);',[...arr] ) );
+    [err,result] = await to(db.query('INSERT INTO TAG(title) values (?);',req.body.title ) );
 
     if(err){
         console.log(err);
@@ -21,14 +21,14 @@ exports.createTag = async(req,res) =>{
 
 exports.delTag = async(req,res) => {
 
-    [err,result] = await to(db.query('DELETE FROM TAG WHERE id = ?',req.body.id));
+    [err,result] = await to(db.query('DELETE FROM TAG WHERE id = ?;',req.body.id));
 
     if(err){
         console.log(err);
         return res.sendError(null);
     }
     else{
-        [err2,result2] = await to(db.query('DELETE FROM TAGSOFBOOK where TAGID = ?',req.body.id));
+        [err2,result2] = await to(db.query('DELETE FROM TAGSOFBOOK where TAGID = ?;',req.body.id));
 
         if(err2){
             console.log(err);
@@ -70,7 +70,7 @@ exports.removeTag = async(req,res) =>{
 };
 
 exports.getallTags = async(req,res) => {
-    [err,result] = await to (db.query('SELECT * FROM TAGS;'));
+    [err,result] = await to (db.query('SELECT * FROM TAG;'));
 
     if(err){
         console.log(err);

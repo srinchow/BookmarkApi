@@ -5,7 +5,7 @@ const tools = require("../utils/tools");
 exports.addBookmark = async(req,res) =>{
     let arr = tools.sqlvals(req.body);
 
-    [err,result] = await to(db.query('INSERT INTO BOOKMARK(Link,Title,Publisher);',[...arr] ) );
+    [err,result] = await to(db.query('INSERT INTO BOOKMARK(Link,Title,Publisher) VALUES (?,?,?);',[req.body.link,req.body.title,req.body.publisher] ) );
 
     if(err){
         console.log(err);
